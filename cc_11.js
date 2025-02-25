@@ -74,8 +74,20 @@ lendBook(borrowerId, isbn) {
     
     book.updateCopies(-1)
     borrower.borrowBook(book.title)
+}
+returnBook(borrowerId, isbn) {
+    const book= this.books.find(b => b.isbn === isbn)
+    if (book === undefined) {
+        this.console.log("Book does not exist")
+        return
+    }
+    const borrower =  this.borrowers.find (b => b.borrowerId === borrowerId)
+    if (borrower === undefined) {
+        this.console.log("Borrower not found")
+    }
 
-
+    book.updateCopies(1)
+    borrower.returnBook(book.title)
 }}
 //Test Case for Task 3
 const library = new Library();
@@ -84,5 +96,9 @@ library.listBooks()
 //Test Case for Task 4
 library.addBorrower(borrower1)
 library.lendBook(201, 123456);
+console.log(book1.getDetails())
+console.log(borrower1.borrowedBooks)
+//Test Case for Task 5
+library.returnBook(201, 123456);
 console.log(book1.getDetails())
 console.log(borrower1.borrowedBooks)
