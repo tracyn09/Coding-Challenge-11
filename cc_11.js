@@ -55,8 +55,34 @@ listBooks() {
         console.log(book.getDetails())
     })
 }
+
+//Task 4
+addBorrower(borrower) {
+    this.borrowers.push(borrower)
 }
-//Test Case
+lendBook(borrowerId, isbn) {
+    const book = this.books.find(b => b.isbn === isbn)
+    if (book === undefined || book.copies === 0) {
+        console.log("Book does not exist");
+        return;
+    }
+    let borrower = this.borrowers.find(b => b.borrowerId === borrowerId);
+    if (borrower === undefined) {
+        console.log("Borrower not found")
+        return
+    }
+    
+    book.updateCopies(-1)
+    borrower.borrowBook(book.title)
+
+
+}}
+//Test Case for Task 3
 const library = new Library();
 library.addBook(book1);
 library.listBooks()
+//Test Case for Task 4
+library.addBorrower(borrower1)
+library.lendBook(201, 123456);
+console.log(book1.getDetails())
+console.log(borrower1.borrowedBooks)
